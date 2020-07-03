@@ -13,6 +13,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.properties
 
 # External tool builders
 .externalToolBuilders/
@@ -193,3 +194,4 @@ hs_err_pid*
 cda-avion.iml
 zz-swing-jeuAvion.iml
 !/sauvegarde-jeu.txt
+*.properties
