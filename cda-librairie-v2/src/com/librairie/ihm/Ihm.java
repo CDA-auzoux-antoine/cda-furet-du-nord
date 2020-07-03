@@ -5,14 +5,16 @@ import java.util.Scanner;
 import cda.libraire.idao.implementation.IDao;
 import cda.librairie.dao.DaoLivreImp;
 import cda.librairie.dao.DaoPersonneImp;
+import model.Personne;
 import service.ServiceConnexion;
 import service.ServiceLivre;
 
 public class Ihm {
 	private static String choix = "";
 	private static Scanner sc = new Scanner(System.in);
-	static IDao daoPersonne = new DaoPersonneImp();
-	static IDao daoLivre = new DaoLivreImp();
+	private static IDao daoPersonne = new DaoPersonneImp();
+	private static IDao daoLivre = new DaoLivreImp();
+	private static Personne personne;
 
 	public Ihm() {
 		System.out.println("1 - Connexion");
@@ -44,8 +46,18 @@ public class Ihm {
 		String login = sc.nextLine();
 		System.out.print("Saisir le password: ");
 		String password = sc.nextLine();
-		if (new ServiceConnexion().connexion(daoPersonne, login, password) != null) {
-			// connct�
+		personne = new ServiceConnexion().connexion((DaoPersonneImp) daoPersonne, login, password);
+		if (personne != null) {
+			if (personne.isActived()) {
+				if (personne.isClient()) {
+					menuClient();
+				} else {
+					menuLibraire();
+				}
+			} else {
+				System.out.println("Le compte inactif");
+				connexion();
+			}
 
 		} else {
 			System.out.println("Login ou Password incorrect ! ");
@@ -71,11 +83,12 @@ public class Ihm {
 		new ServiceConnexion().inscription(daoPersonne, login, password);
 	}
 
-	private static void MenuLibraire() {
-
+	private static void menuLibraire() {
+		System.out.println("bienvenue libraire: " + personne.getNom());
 	}
 
-	private static void MenuClient() {
+	private static void menuClient() {
+		System.out.println("bienvenue client : " + personne.getNom());
 
 	}
 

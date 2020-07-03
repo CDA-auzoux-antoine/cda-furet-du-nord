@@ -11,12 +11,16 @@ public class Personne {
 	private String prenom;
 	private int id;
 	private boolean isClient;
+	private boolean isActived;
 
-	public Personne(String login, String password, String nom, String prenom) {
+	public Personne(String nom, String prenom, String login, String password, int idAdresse, boolean isActived,
+			boolean isClient) {
 		super();
 		this.login = login;
 		this.password = password;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.isClient = isClient;
+		this.isActived = isActived;
 	}
 }
