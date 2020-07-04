@@ -14,7 +14,7 @@ public class MyConnection {// nous retourne la connexion à la bdd
 
 		try {
 			connexion = dataSource.getConnection();
-			System.out.println("connecté");
+			System.out.println("connect�");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

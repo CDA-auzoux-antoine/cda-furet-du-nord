@@ -1,10 +1,12 @@
 package com.librairie.ihm;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import cda.libraire.idao.implementation.IDao;
 import cda.librairie.dao.DaoLivreImp;
 import cda.librairie.dao.DaoPersonneImp;
+import model.Livre;
 import model.Personne;
 import service.ServiceConnexion;
 import service.ServiceLivre;
@@ -34,7 +36,7 @@ public class Ihm {
 			inscription();
 			break;
 		case "3":
-			ServiceLivre.ListerLesLivres();
+			ServiceLivre.ListerLesLivres((ArrayList<Livre>) daoLivre.selectAll());
 			break;
 		default:
 			break;

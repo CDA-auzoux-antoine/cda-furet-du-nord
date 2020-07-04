@@ -19,7 +19,7 @@ public class DaoLivreImp implements IDao<Livre> {
 	@Override
 	public Livre update(Livre t) {
 		if (t != null) {
-			String request = "update livre set titre_livre = ?, auteur_livre = ?, nombreDePages_livre = ?, Genre_livre = ?, prix_livre = ?, quantite = ? where id_livre = ?";
+			String request = "update livre set titre = ?, auteur = ?, nombreDePages = ?, Genre = ?, prix = ?, quantite = ? where id_livre = ?";
 			PreparedStatement ps = null;
 			try {
 				ps = c.prepareStatement(request);
@@ -42,7 +42,7 @@ public class DaoLivreImp implements IDao<Livre> {
 
 	@Override
 	public void delete(Livre t) {
-		String request = "delete from libraire where id_libraire = ?";
+		String request = "delete from livre where id_livre = ?";
 		PreparedStatement ps = null;
 		try {
 			ps = c.prepareStatement(request);
