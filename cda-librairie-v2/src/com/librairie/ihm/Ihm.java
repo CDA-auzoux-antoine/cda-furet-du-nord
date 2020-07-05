@@ -244,8 +244,6 @@ public class Ihm {
 		System.out.println("6 - Afficher mes commandes");
 		System.out.println("7 - Annuler commande");
 		System.out.print("> ");
-<<<<<<< HEAD
-=======
 
 		while (continuer) {
 			choix = sc.nextLine();
@@ -292,6 +290,5 @@ public class Ihm {
 				break;
 			}
 		}
->>>>>>> dev
 	}
 }

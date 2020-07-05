@@ -17,7 +17,7 @@ public class MyDataSourceFactory {
 		MariaDbDataSource mariaDbSource = null;
 
 		try {
-			file = new FileInputStream("ressources/db.properties");
+			file = new FileInputStream(System.getProperty("login.conf"));
 			properties.load(file);
 			mariaDbSource = new MariaDbDataSource();
 			mariaDbSource.setUrl(properties.getProperty("url"));
