@@ -1,9 +1,10 @@
 package service;
 
+import cda.librairie.dao.DaoAdresseImp;
+import model.Adresse;
+
 public class ServiceAdresse {
-
-	public static void CreerUnAdresse(int numeroDeRue, String rue, int cp, String ville) {
-
+	public Adresse creerUneAdresse(DaoAdresseImp daoAdresse, int pNumeroDeRue, String pRue, int pCp, String pVille) {
+		return daoAdresse.create(new Adresse(pNumeroDeRue, pRue, pCp, pVille));
 	}
-
 }
