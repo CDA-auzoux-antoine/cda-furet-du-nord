@@ -54,10 +54,11 @@ public class DaoLivreImp implements IDao<Livre> {
 	}
 
 	@Override
-	public Livre find(int id) {
+	public Livre find(String pId) {
 		Livre vLivre = null;
+		int id = Integer.parseInt(pId);
 		try {
-			String request = "select * from livre where id_livre = ?";
+			String request = "SELECT * FROM livre WHERE id_livre = ?";
 			PreparedStatement ps = c.prepareStatement(request);
 			ps.setInt(1, id);
 			ResultSet r = ps.executeQuery();
@@ -79,7 +80,6 @@ public class DaoLivreImp implements IDao<Livre> {
 		if (vLivre != null) {
 			return vLivre;
 		} else {
-
 			return null;
 		}
 	}
@@ -114,9 +114,9 @@ public class DaoLivreImp implements IDao<Livre> {
 	public Livre create(Livre t) {
 		if (c != null && t != null) {
 			try {
-				String request = "INSERT INTO livre (titre_livre,auteur_livre,nombreDePages_livre,Genre_livre, prix_livre,quantite ) VALUES (?,?,?,?,?,?)";
+				String request = "INSERT INTO livre (titre,auteur,nombreDePages,genre, prix,quantite ) VALUES (?,?,?,?,?,?)";
 				PreparedStatement ps = null;
-				ps = c.prepareStatement(request);
+				ps = c.prepareStatement(request, PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, t.getTitre());
 				ps.setString(2, t.getAuteur());
 				ps.setInt(3, t.getNbrePage());

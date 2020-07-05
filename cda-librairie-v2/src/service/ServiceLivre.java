@@ -11,20 +11,19 @@ public class ServiceLivre {
 		for (Livre livre : pArray) {
 			System.out.format("%5s%50s%15s%35s%15s%10s%n", livre.getIdentifiant(), livre.getTitre(), livre.getAuteur(),
 					livre.getGenre(), livre.getNbrePage(), livre.getPrix());
-
 		}
 
 	}
 
 	public static void modifierPrixLivre(DaoLivreImp pLivreImp, int vPrix, int pId) {
-		Livre vLivre = pLivreImp.find(pId);
+		Livre vLivre = pLivreImp.find(Integer.toString(pId));
 		vLivre.setPrix(vPrix);
 		pLivreImp.update(vLivre);
 
 	}
 
 	public static boolean modifierQuantiteALaCommande(DaoLivreImp pLivreImp, int pQuantite, int pId) {
-		Livre vLivre = pLivreImp.find(pId);
+		Livre vLivre = pLivreImp.find(Integer.toString(pId));
 		if (vLivre.getIdentifiant() > pQuantite) {
 			vLivre.setQuantite(vLivre.getQuantite() - pQuantite);
 			pLivreImp.update(vLivre);
@@ -38,7 +37,7 @@ public class ServiceLivre {
 	}
 
 	public static void modifierQuantiteDuStock(DaoLivreImp pLivreImp, int pQuantite, int pId) {
-		Livre vLivre = pLivreImp.find(pId);
+		Livre vLivre = pLivreImp.find(Integer.toString(pId));
 		vLivre.setQuantite(pQuantite);
 		pLivreImp.update(vLivre);
 	}
