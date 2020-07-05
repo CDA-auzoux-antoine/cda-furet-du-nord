@@ -26,7 +26,11 @@ public class DaoCommande implements IDao<Commande> {
 
 	@Override
 	public Commande find(String id) {
+<<<<<<< HEAD
 
+=======
+		// TODO Auto-generated method stub
+>>>>>>> ef121467702657665165f720f5aff66b34f4ce0b
 		return null;
 	}
 
