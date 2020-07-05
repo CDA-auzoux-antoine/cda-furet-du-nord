@@ -9,7 +9,7 @@ public interface IDao<T> {
 
 	void delete(T t);
 
-	T find(int id);
+	T find(String id);
 
 	List<T> selectAll();
 }

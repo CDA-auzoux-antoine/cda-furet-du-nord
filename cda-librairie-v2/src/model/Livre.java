@@ -6,7 +6,6 @@ import lombok.Data;
 public class Livre {
 
 	private String titre;
-
 	private String genre;
 	private String auteur;
 	private float prix;
