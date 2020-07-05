@@ -1,5 +1,14 @@
 package model;
 
+import lombok.Data;
+
+@Data
 public class Commande {
+	private int idClient;
+	private int idcmd;
+
+	public Commande(int id) {
+		this.idClient = id;
+	}
 
 }

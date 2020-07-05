@@ -5,13 +5,18 @@ import java.util.Scanner;
 
 import cda.libraire.idao.implementation.IDao;
 import cda.librairie.dao.DaoAdresseImp;
+import cda.librairie.dao.DaoCommande;
+import cda.librairie.dao.DaoDetailCommande;
 import cda.librairie.dao.DaoLivreImp;
 import cda.librairie.dao.DaoPersonneImp;
+import model.DetailCommande;
 import model.Livre;
 import model.Personne;
 import outils.VerificationInscription;
 import service.ServiceAdresse;
+import service.ServiceCommande;
 import service.ServiceConnexion;
+import service.ServiceDetailCommande;
 import service.ServiceLivre;
 
 public class Ihm {
@@ -19,8 +24,10 @@ public class Ihm {
 	private static String choix = "";
 	private static Scanner sc = new Scanner(System.in);
 	private static IDao daoPersonne = new DaoPersonneImp();
-	private static IDao<Livre> daoLivre = new DaoLivreImp();
+	private static IDao daoLivre = new DaoLivreImp();
 	private static IDao daoAdresse = new DaoAdresseImp();
+	private static IDao daoDetail = new DaoDetailCommande();
+	private static IDao daoCommande = new DaoCommande();
 	private static Personne personne;
 
 	public Ihm() {
@@ -203,6 +210,7 @@ public class Ihm {
 				ServiceLivre.ajouterLivreAuStock((DaoLivreImp) daoLivre, vLivre);
 				break;
 			case "2":
+
 				System.out.print("Saisissez l'id du livre : ");
 				int id = sc.nextInt();
 				System.out.println("Saisissez la nouvelle quantité");
@@ -228,10 +236,59 @@ public class Ihm {
 	private static void menuClient() {
 		System.out.println("bienvenue client : " + personne.getNom());
 		System.out.println("0 - Quitter");
-		System.out.println("1 - Passer une commande");
-		System.out.println("2 - Lister mes commandes");
-		System.out.println("3 - Annuler une commande");
+		System.out.println("1 - Ajouter livre au panier");
+		System.out.println("2 - Afficher mon panier");
+		System.out.println("3 - Effacer livre du panier");
+		System.out.println("4 - Effacer le panier");
+		System.out.println("5 - Valider ma commande");
+		System.out.println("6 - Afficher mes commandes");
+		System.out.println("7 - Annuler commande");
 		System.out.print("> ");
-	}
 
+		while (continuer) {
+			choix = sc.nextLine();
+			switch (choix) {
+			case "1":
+				System.out.println("saisissez l'id du livre : ");
+				String id = sc.nextLine();
+				System.out.println("saisissez la quantité : ");
+				int quant = sc.nextInt();
+				quant += DetailCommande.commande.getOrDefault(((Livre) daoLivre.find(id)), 0);
+				DetailCommande.commande.put((Livre) daoLivre.find(id), quant);
+				break;
+			case "2":
+				ServiceDetailCommande.afficherMonPanier((DaoLivreImp) daoLivre);// a implementer
+				break;
+			case "3":
+				System.out.println("saisissez l'id du livre a supprimer");
+				id = sc.nextLine();
+				DetailCommande.commande.remove((Livre) daoLivre.find(id));
+				break;
+			case "4":
+				DetailCommande.commande.clear();
+				break;
+			case "5":
+				int idCommande = ServiceCommande.creerCommande((DaoCommande) daoCommande, personne);
+				ServiceDetailCommande.validerMonPanier((DaoDetailCommande) daoDetail, personne, idCommande);
+				DetailCommande.commande.clear();
+				break;
+			case "6":
+				for (DetailCommande mesCmd : (ArrayList<DetailCommande>) daoDetail.selectAll()) {
+					if (mesCmd.getIdClient() == personne.getId()) {
+						System.out.print(mesCmd.getIdCommande() + " :");
+						System.out.print(((Livre) daoLivre.find(mesCmd.getLivre() + "")).getTitre() + " ");
+						System.out.println(mesCmd.getQuantite());
+					}
+				}
+				break;
+			case "7":
+				System.out.println("taper l'id commande a annulé");
+				id = sc.nextLine();
+				daoDetail.delete(daoDetail.find(id));
+
+			default:
+				break;
+			}
+		}
+	}
 }

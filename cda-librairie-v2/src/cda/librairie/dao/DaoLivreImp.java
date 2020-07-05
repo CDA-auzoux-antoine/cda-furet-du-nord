@@ -58,7 +58,7 @@ public class DaoLivreImp implements IDao<Livre> {
 		Livre vLivre = null;
 		int id = Integer.parseInt(pId);
 		try {
-			String request = "SELECT * FROM adresse WHERE id_adresse = ?";
+			String request = "SELECT * FROM livre WHERE id_livre = ?";
 			PreparedStatement ps = c.prepareStatement(request);
 			ps.setInt(1, id);
 			ResultSet r = ps.executeQuery();
