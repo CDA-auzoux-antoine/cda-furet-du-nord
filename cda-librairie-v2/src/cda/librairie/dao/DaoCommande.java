@@ -25,7 +25,7 @@ public class DaoCommande implements IDao<Commande> {
 	}
 
 	@Override
-	public Commande find(int id) {
+	public Commande find(String id) {
 
 		return null;
 	}
