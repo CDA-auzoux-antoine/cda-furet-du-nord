@@ -3,7 +3,7 @@ package service;
 import java.util.ArrayList;
 
 import cda.librairie.dao.DaoLivreImp;
-import model.model.Livre;
+import model.Livre;
 
 public class ServiceLivre {
 	public static void ListerLesLivres(ArrayList<Livre> pArray) {

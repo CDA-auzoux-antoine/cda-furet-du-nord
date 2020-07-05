@@ -11,7 +11,7 @@ import java.util.List;
 import com.librairie.connexion.bd.MyConnection;
 
 import cda.libraire.idao.implementation.IDao;
-import model.model.Livre;
+import model.Livre;
 
 public class DaoLivreImp implements IDao<Livre> {
 	private static Connection c = MyConnection.getConnexion();

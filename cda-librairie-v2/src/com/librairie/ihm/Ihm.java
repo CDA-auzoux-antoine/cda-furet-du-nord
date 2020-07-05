@@ -6,8 +6,8 @@ import java.util.Scanner;
 import cda.libraire.idao.implementation.IDao;
 import cda.librairie.dao.DaoLivreImp;
 import cda.librairie.dao.DaoPersonneImp;
-import model.model.Livre;
-import model.model.Personne;
+import model.Livre;
+import model.Personne;
 import service.ServiceConnexion;
 import service.ServiceLivre;
 
