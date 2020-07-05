@@ -9,7 +9,7 @@ import java.util.List;
 import com.librairie.connexion.bd.MyConnection;
 
 import cda.libraire.idao.implementation.IDao;
-import model.Personne;
+import model.model.Personne;
 
 public class DaoPersonneImp implements IDao<Personne> {
 	private static final Connection c = MyConnection.getConnexion();

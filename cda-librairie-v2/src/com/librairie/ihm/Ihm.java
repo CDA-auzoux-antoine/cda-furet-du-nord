@@ -6,8 +6,8 @@ import java.util.Scanner;
 import cda.libraire.idao.implementation.IDao;
 import cda.librairie.dao.DaoLivreImp;
 import cda.librairie.dao.DaoPersonneImp;
-import model.Livre;
-import model.Personne;
+import model.model.Livre;
+import model.model.Personne;
 import service.ServiceConnexion;
 import service.ServiceLivre;
 
@@ -87,11 +87,11 @@ public class Ihm {
 
 	private static void menuLibraire() {
 		System.out.println("bienvenue libraire: " + personne.getNom());
+		new IhmLibraire(personne);
 	}
 
 	private static void menuClient() {
 		System.out.println("bienvenue client : " + personne.getNom());
-
+		new IhmClient(personne);
 	}
-
 }

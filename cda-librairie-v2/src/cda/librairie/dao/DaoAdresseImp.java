@@ -3,7 +3,7 @@ package cda.librairie.dao;
 import java.util.List;
 
 import cda.libraire.idao.implementation.IDao;
-import model.Adresse;
+import model.model.Adresse;
 
 public class DaoAdresseImp implements IDao<Adresse> {
 
