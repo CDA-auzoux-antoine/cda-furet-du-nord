@@ -19,7 +19,7 @@ public class Ihm {
 	private static String choix = "";
 	private static Scanner sc = new Scanner(System.in);
 	private static IDao daoPersonne = new DaoPersonneImp();
-	private static IDao daoLivre = new DaoLivreImp();
+	private static IDao<Livre> daoLivre = new DaoLivreImp();
 	private static IDao daoAdresse = new DaoAdresseImp();
 	private static Personne personne;
 
@@ -212,7 +212,7 @@ public class Ihm {
 			case "3":
 				System.out.print("Saisissez l'id du livre : ");
 				id = sc.nextInt();
-				daoLivre.delete(daoLivre.find(id));
+				daoLivre.delete(daoLivre.find(Integer.toString(id)));
 				break;
 			case "4":
 				break;

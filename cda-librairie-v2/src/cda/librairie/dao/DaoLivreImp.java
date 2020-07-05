@@ -114,9 +114,9 @@ public class DaoLivreImp implements IDao<Livre> {
 	public Livre create(Livre t) {
 		if (c != null && t != null) {
 			try {
-				String request = "INSERT INTO livre (titre_livre,auteur_livre,nombreDePages_livre,Genre_livre, prix_livre,quantite ) VALUES (?,?,?,?,?,?)";
+				String request = "INSERT INTO livre (titre,auteur,nombreDePages,genre, prix,quantite ) VALUES (?,?,?,?,?,?)";
 				PreparedStatement ps = null;
-				ps = c.prepareStatement(request);
+				ps = c.prepareStatement(request, PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, t.getTitre());
 				ps.setString(2, t.getAuteur());
 				ps.setInt(3, t.getNbrePage());
