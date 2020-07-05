@@ -54,10 +54,11 @@ public class DaoLivreImp implements IDao<Livre> {
 	}
 
 	@Override
-	public Livre find(int id) {
+	public Livre find(String pId) {
 		Livre vLivre = null;
+		int id = Integer.parseInt(pId);
 		try {
-			String request = "select * from livre where id_livre = ?";
+			String request = "SELECT * FROM adresse WHERE id_adresse = ?";
 			PreparedStatement ps = c.prepareStatement(request);
 			ps.setInt(1, id);
 			ResultSet r = ps.executeQuery();
@@ -79,7 +80,6 @@ public class DaoLivreImp implements IDao<Livre> {
 		if (vLivre != null) {
 			return vLivre;
 		} else {
-
 			return null;
 		}
 	}

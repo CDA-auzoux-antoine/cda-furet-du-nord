@@ -11,7 +11,6 @@ public class ServiceLivre {
 		for (Livre livre : pArray) {
 			System.out.format("%5s%50s%15s%35s%15s%10s%n", livre.getIdentifiant(), livre.getTitre(), livre.getAuteur(),
 					livre.getGenre(), livre.getNbrePage(), livre.getPrix());
-
 		}
 	}
 }
