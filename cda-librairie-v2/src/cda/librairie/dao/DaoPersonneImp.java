@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.librairie.connexion.bd.MyConnection;
@@ -77,19 +79,70 @@ public class DaoPersonneImp implements IDao<Personne> {
 
 	@Override
 	public Personne update(Personne t) {
-		// pour activer le compte Personne
+		String request = "update personne set isActived=true where id_personne = ?";
+
+		try {
+			PreparedStatement ps = null;
+			ps = c.prepareStatement(request);
+
+			ps.setInt(1, t.getId());
+			// on passe int id (cast) et on le set au ? du string, on met 1 car c'est le
+			// premier id
+			ps.executeUpdate();// exectution de la requete pour requete
+								// ecriture
+			// ps.executeUpdate();?
+
+			// on passe int id (cast) et on le set au ? du string, on met 1 car c'est le
+			// premier id
+
+			return t;
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public void delete(Personne t) {
-
+		if (t != null) {
+			String request = "delete from personne where id_personne= ? and isClient=1";
+			PreparedStatement ps = null;
+			try {
+				ps = c.prepareStatement(request);
+				ps.setInt(1, t.getId());
+				ps.executeUpdate();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public List<Personne> selectAll() {
 
-		return null;
+		ArrayList<Personne> arrayPersonne = new ArrayList<>();
+		try {
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("select * from personne");
+			while (r.next()) {
+				Integer vIdPersonne = r.getInt(1);
+				String nom = r.getString(2);
+				String prenom = r.getString(3);
+				String login = r.getString(4);
+				String password = r.getString(5);
+				int idAdresse = r.getInt(6);
+				boolean isActived = r.getBoolean(7);
+				boolean isClient = r.getBoolean(8);
+				Personne personne = new Personne(nom, prenom, login, password, idAdresse, isActived, isClient);
+				personne.setId(vIdPersonne);
+				arrayPersonne.add(personne);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return arrayPersonne;
 	}
 
 	// Connexion au compte

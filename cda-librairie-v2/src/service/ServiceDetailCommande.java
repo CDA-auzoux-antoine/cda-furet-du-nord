@@ -28,8 +28,9 @@ public class ServiceDetailCommande {
 		}
 	}
 
-	public static void livrerCommande(DaoDetailCommande detailCmdDao, DetailCommande detailCmd) {
-		detailCmdDao.update(detailCmd);
+//	public static void livrerCommande(DaoDetailCommande detailCmdDao, DetailCommande detailCmd) {
+//		detailCmdDao.update(detailCmd);
+//
+//	}
 
-	}
 }

@@ -9,34 +9,33 @@ import cda.librairie.dao.DaoCommande;
 import cda.librairie.dao.DaoDetailCommande;
 import cda.librairie.dao.DaoLivreImp;
 import cda.librairie.dao.DaoPersonneImp;
-import model.DetailCommande;
 import model.Livre;
 import model.Personne;
 import outils.VerificationInscription;
 import service.ServiceAdresse;
-import service.ServiceCommande;
 import service.ServiceConnexion;
-import service.ServiceDetailCommande;
-import service.ServiceLivre;
 
 public class Ihm {
-	private static boolean continuer = true;
-	private static String choix = "";
-	private static Scanner sc = new Scanner(System.in);
-	private static IDao daoPersonne = new DaoPersonneImp();
-	private static IDao daoLivre = new DaoLivreImp();
-	private static IDao daoAdresse = new DaoAdresseImp();
-	private static IDao daoDetail = new DaoDetailCommande();
-	private static IDao daoCommande = new DaoCommande();
-	private static Personne personne;
+	public static boolean continuer = true;
+	public static String choix = "";
+	public static Scanner sc = new Scanner(System.in);
+	public static IDao daoPersonne = new DaoPersonneImp();
+	public static IDao daoLivre = new DaoLivreImp();
+	public static IDao daoAdresse = new DaoAdresseImp();
+	public static IDao daoDetail = new DaoDetailCommande();
+	public static IDao daoCommande = new DaoCommande();
+	public static Personne personne;
 
 	public Ihm() {
-		System.out.println("1 - Connexion");
-		System.out.println("2 - Inscription");
-		System.out.println("3 - Lister les livres");
-		System.out.print("> ");
-		choix = sc.nextLine();
-		switchReponse(choix);
+		do {
+			System.out.println("0 - Quitter");
+			System.out.println("1 - Connexion");
+			System.out.println("2 - Inscription");
+			System.out.println("3 - Lister les livres");
+			System.out.print("> ");
+			choix = sc.nextLine();
+			switchReponse(choix);
+		} while (!choix.equals("0"));
 	}
 
 	private static void switchReponse(String c) {
@@ -48,7 +47,8 @@ public class Ihm {
 			inscription();
 			break;
 		case "3":
-			ServiceLivre.ListerLesLivres((ArrayList<Livre>) daoLivre.selectAll());
+
+			listerLesLivres();
 			break;
 		default:
 			break;
@@ -64,9 +64,10 @@ public class Ihm {
 		if (personne != null) {
 			if (personne.isActived()) {
 				if (personne.isClient()) {
-					menuClient();
+					IhmClient.menuClient();
 				} else {
-					menuLibraire();
+					IhmLibraire.menuLibraire();
+//					menuLibraire();
 				}
 			} else {
 				System.out.println("Le compte est inactif");
@@ -104,7 +105,7 @@ public class Ihm {
 			System.out.print("> ");
 			vPrenom = sc.nextLine();
 			System.out.println(VerificationInscription.validePrenom(vPrenom) + "\n");
-		} while (!VerificationInscription.validePrenom(vPrenom).equals("Prénom valide."));
+		} while (!VerificationInscription.validePrenom(vPrenom).equals("Prï¿½nom valide."));
 		VerificationInscription.validationInscription.remove(0);
 
 		do {
@@ -112,7 +113,7 @@ public class Ihm {
 			System.out.print("> ");
 			vNumeroRue = sc.nextLine();
 			System.out.println(VerificationInscription.valideNumeroRue(vNumeroRue) + "\n");
-		} while (!VerificationInscription.valideNumeroRue(vNumeroRue).equals("Numéro de rue valide."));
+		} while (!VerificationInscription.valideNumeroRue(vNumeroRue).equals("Numï¿½ro de rue valide."));
 		VerificationInscription.validationInscription.remove(0);
 
 		do {
@@ -144,7 +145,7 @@ public class Ihm {
 			System.out.print("> ");
 			vLogin = sc.nextLine();
 			if (daoPersImp.find(vLogin) != null) {
-				System.out.println("Login déjà utilisé.\n");
+				System.out.println("Login dï¿½jï¿½ utilisï¿½.\n");
 			} else {
 				System.out.println(VerificationInscription.valideLogin(vLogin) + "\n");
 			}
@@ -168,127 +169,24 @@ public class Ihm {
 					Integer.parseInt(vCodePostal), vVille);
 			new ServiceConnexion().inscription((DaoPersonneImp) daoPersonne, vNom, vPrenom,
 					((DaoAdresseImp) daoAdresse).getIdAdresse(), vLogin, vPassword);
-			System.out.println("Compte créé, en attente de validation par un libraire.");
+			System.out.println("Compte crï¿½ï¿½, en attente de validation par un libraire.");
 		} else {
-			System.out.println("Une erreur s'est produite à la création du compte.");
-			System.out.println("Veuillez remplir le formulaire à nouveau.");
+			System.out.println("Une erreur s'est produite ï¿½ la crï¿½ation du compte.");
+			System.out.println("Veuillez remplir le formulaire ï¿½ nouveau.");
 			inscription();
 		}
 	}
 
 	private static void menuLibraire() {
-		System.out.println("bienvenue libraire: " + personne.getNom());
-		System.out.println("0 - Quitter");
-		System.out.println("1 - Ajouter un nouveau livre");
-		System.out.println("2 - Modifier quantitï¿½ d'un livre");
-		System.out.println("3 - Supprimer un livre");
-		System.out.println("4 - Lister toute les commandes");
-		System.out.println("5 - Modifier l'etat de la commande");
-		System.out.print("> ");
-		while (continuer) {
-			choix = sc.nextLine();
-			switch (choix) {
-			case "0":
-				continuer = false;
-				System.out.println("Merci et a bientot.");
-				break;
-			case "1":
-				System.out.print("Saisir le titre: ");
-				String titre = sc.nextLine();
-				System.out.print("Saisir le genre: ");
-				String genre = sc.nextLine();
-				System.out.print("Saisir l'auteur: ");
-				String auteur = sc.nextLine();
-				System.out.print("Saisir le prix: ");
-				int prix = sc.nextInt();
-				sc.nextLine();
-				System.out.print("Saisir le nombre de page: ");
-				int nbrePage = sc.nextInt();
-				System.out.print("Saisir la quantite : ");
-				int quantite = sc.nextInt();
-				Livre vLivre = new Livre(titre, genre, auteur, prix, nbrePage, quantite);
-				ServiceLivre.ajouterLivreAuStock((DaoLivreImp) daoLivre, vLivre);
-				break;
-			case "2":
-
-				System.out.print("Saisissez l'id du livre : ");
-				int id = sc.nextInt();
-				System.out.println("Saisissez la nouvelle quantitï¿½");
-				quantite = sc.nextInt();
-				ServiceLivre.modifierQuantiteDuStock((DaoLivreImp) daoLivre, quantite, id);
-				break;
-			case "3":
-				System.out.print("Saisissez l'id du livre : ");
-				id = sc.nextInt();
-				daoLivre.delete(daoLivre.find(Integer.toString(id)));
-				break;
-			case "4":
-				break;
-			case "5":
-				break;
-			default:
-				break;
-			}
-		}
 
 	}
 
-	private static void menuClient() {
-		System.out.println("bienvenue client : " + personne.getNom());
-		System.out.println("0 - Quitter");
-		System.out.println("1 - Ajouter livre au panier");
-		System.out.println("2 - Afficher mon panier");
-		System.out.println("3 - Effacer livre du panier");
-		System.out.println("4 - Effacer le panier");
-		System.out.println("5 - Valider ma commande");
-		System.out.println("6 - Afficher mes commandes");
-		System.out.println("7 - Annuler commande");
-		System.out.print("> ");
-
-		while (continuer) {
-			choix = sc.nextLine();
-			switch (choix) {
-			case "1":
-				System.out.println("saisissez l'id du livre : ");
-				String id = sc.nextLine();
-				System.out.println("saisissez la quantité : ");
-				int quant = sc.nextInt();
-				quant += DetailCommande.commande.getOrDefault(((Livre) daoLivre.find(id)), 0);
-				DetailCommande.commande.put((Livre) daoLivre.find(id), quant);
-				break;
-			case "2":
-				ServiceDetailCommande.afficherMonPanier((DaoLivreImp) daoLivre);// a implementer
-				break;
-			case "3":
-				System.out.println("saisissez l'id du livre a supprimer");
-				id = sc.nextLine();
-				DetailCommande.commande.remove((Livre) daoLivre.find(id));
-				break;
-			case "4":
-				DetailCommande.commande.clear();
-				break;
-			case "5":
-				int idCommande = ServiceCommande.creerCommande((DaoCommande) daoCommande, personne);
-				ServiceDetailCommande.validerMonPanier((DaoDetailCommande) daoDetail, personne, idCommande);
-				DetailCommande.commande.clear();
-				break;
-			case "6":
-				for (DetailCommande mesCmd : (ArrayList<DetailCommande>) daoDetail.selectAll()) {
-					if (mesCmd.getIdClient() == personne.getId()) {
-						System.out.print(mesCmd.getIdCommande() + " :");
-						System.out.print(((Livre) daoLivre.find(mesCmd.getLivre() + "")).getTitre() + " ");
-						System.out.println(mesCmd.getQuantite());
-					}
-				}
-				break;
-			case "7":
-				System.out.println("taper l'id commande a annulé");
-				id = sc.nextLine();
-				daoDetail.delete(daoDetail.find(id));
-
-			default:
-				break;
-			}
+	public static void listerLesLivres() {
+		System.out.format("%5s%50s%15s%35s%15s%10s%n", "ID", "Titre", "Auteur", "Genre", "Nombre Page", "Prix");
+		for (Livre livre : (ArrayList<Livre>) daoLivre.selectAll()) {
+			System.out.format("%5s%50s%15s%35s%15s%10s%n", livre.getIdentifiant(), livre.getTitre(), livre.getAuteur(),
+					livre.getGenre(), livre.getNbrePage(), livre.getPrix());
 		}
 	}
+
 }

@@ -31,7 +31,7 @@ primary key (id_adresse)) ENGINE = InnoDB;
 
 create table Commande (id_commande int(10) auto_increment not null,
 id_personne int(6) not null ,
-date_Commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+date_Commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
 primary key (id_commande,id_personne)) ENGINE = InnoDB;
 
 
@@ -45,7 +45,7 @@ commande_livree bool default false # permet de voir si la commande a été livr�
 
 insert into adresse (numeroDeRue,rue,cp,  ville)values(123,"rue","5900","lille");
 
-insert into personne (nom,prenom ,id_adresse ,login ,password, isActived ) values("client1","client1", 1, "client1","client1", true);
+insert into personne (nom,prenom ,id_adresse ,login ,password, isClient ) values("libraire","libraire", 1, "libraire3",md5("libraire3"),false);
 insert into personne (nom,prenom ,id_adresse ,login ,password, isActived ) values("client2","client2", 1, "client2","client2", false);
 insert into personne (nom,prenom ,id_adresse ,login ,password ,isActived ,isClient ) values("libraireN","libraireP", 1, "libraire","libraire",true,false);
 
@@ -217,3 +217,16 @@ select * from personne;
 
 #CREATE TABLE myTable (  ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
 
+select * from personne p ;
+
+
+
+select * from commande c ;
+
+insert into commande (id_personne, date_Commande )values(1, CURRENT_TIMESTAMP);
+
+
+
+select * from detailscommande d ;
+insert into detailscommande values(1,1, 15, 20, false);
+insert into detailscommande values(2,1, 15, 20, true);

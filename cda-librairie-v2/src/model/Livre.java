@@ -1,8 +1,10 @@
 package model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Livre implements Comparable<Livre> {
 
 	private String titre;

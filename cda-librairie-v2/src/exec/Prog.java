@@ -8,5 +8,7 @@ public class Prog {
 		MyConnection.getConnexion();
 		new Ihm();
 
+		// -Dlogin.conf=ressources/db.properties
+
 	}
 }
